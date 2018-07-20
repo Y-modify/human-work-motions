@@ -12,7 +12,7 @@ else:
     robot = Humanoid("yamax.urdf", bullet_client=pybullet)
     pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
     pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_MOUSE_PICKING, 0)
-    pybullet.resetDebugVisualizerCamera(0.7 + 1, 75, -15, [0,0,0])
+    pybullet.resetDebugVisualizerCamera(0.7 + 1, 75, -15, [0, 0, 0])
 
 motions = Motions(robot)
 loader = SequentialLoader(motions)
