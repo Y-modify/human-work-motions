@@ -1,6 +1,6 @@
 from humanoid import Humanoid
 from SequentialLoader import SequentialLoader
-import Motions
+from Motions import Motions
 
 real = False
 
