@@ -29,12 +29,12 @@ class ActionBuffer(object):
         return len(self._timepoints) == 1
 
 class LegacyLoader(object):
-    def __init__(self, legacy=None):
-        if legacy is None:
-            import legacy
-        self.legacy = legacy
-        self.legacy.delay = self.__delay
-        self.legacy.setServoPulse = self.__setServoPulse
+    def __init__(self, motions=None):
+        if motions is None:
+            import Motions as motions
+        self.motions = motions
+        self.motions.delay = self.__delay
+        self.motions.setServoPulse = self.__setServoPulse
 
     def __delay(self, ms):
         self._buffer.add_timepoint(ms)
@@ -44,7 +44,7 @@ class LegacyLoader(object):
             self._buffer.add_action(self.robot.set_joint_state, (idx - 8, (deg - 90) / 180 * math.pi))
 
     def __getattr__(self, name):
-        attr = getattr(self.legacy, name)
+        attr = getattr(self.motions, name)
         if not callable(attr):
             return attr
         def __do(*args, **kwargs):
@@ -52,6 +52,6 @@ class LegacyLoader(object):
             attr(*args, **kwargs)
             start = time.time()
             while not self._buffer.is_empty():
-                self.legacy.robot.step()
+                self.motions.robot.step()
                 self._buffer.do_at_t((time.time() - start) * 1000)
         return __do
