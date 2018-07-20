@@ -30,7 +30,7 @@ class ActionBuffer(object):
         return len(self._timepoints) == 1
 
 
-class LegacyLoader(object):
+class SequentialLoader(object):
     def __init__(self, motions):
         self.motions = motions
         self.motions.delay = self.__delay
