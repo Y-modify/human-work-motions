@@ -25,9 +25,6 @@ def setServoPulse(idx, deg):
 def delay(ms):
     time.sleep(ms/1000)
 
-def print_c(fmt, *args):
-    print(fmt)
-
 # Port definition
 if robot.is_real:
     servoA = 8
@@ -1570,8 +1567,6 @@ def walk(times, delaytime):
   if (delaytime < 20):
     delaytime = 20
 
-  # print_c(f"Walking {times} steps with {delaytime}ms\n")
-
   if (times <= 2):
     times = times
   else:
@@ -1611,8 +1606,6 @@ def back(times, delaytime):
 
   if (delaytime < 20):
     delaytime = 20
-
-  print_c("Walking %d steps with %dms\n", times, delaytime)
 
   if (times <= 2):
     times = times
@@ -1657,8 +1650,6 @@ def crabWalkingRight(times, delaytime):
   if (delaytime < 20):
     delaytime = 20
 
-  print_c("CrabWalkingRight %d steps with %dms\n", times, delaytime)
-
   crouch()
   delay(500)
   for i in range(times):
@@ -1686,8 +1677,6 @@ def crabWalkingLeft(times, delaytime):
   if (delaytime < 20):
     delaytime = 20
 
-  print_c("CrabWalkingRight %d steps with %dms\n", times, delaytime)
-
   crouch()
   delay(500)
   for i in range(times):
@@ -1712,7 +1701,6 @@ def crabWalkingLeft(times, delaytime):
 
 def turnright(times, delaytime):
 
-  print_c("Turning right %d times with %dms\n", times, delaytime)
   if (delaytime < 20):
     delaytime = 20
 
@@ -1737,7 +1725,6 @@ def turnright(times, delaytime):
 
 def turnleft(times, delaytime):
 
-  print_c("Turning left %d times with %dms\n", times, delaytime)
   if (delaytime < 20):
     delaytime = 20
 
@@ -1770,8 +1757,6 @@ def automaDogeza(delaytime):
 
 def no(times):
 
-  print_c("Denying %d times\n", times)
-
   for i in range(times):
 
     setServoPulse(servoA, stA - 60)
@@ -1788,7 +1773,6 @@ def no(times):
 
 def bow(delaytime):
 
-  print_c("Bowing %dms\n", delaytime)
   bowing()
   delay(delaytime)
   resetBowing()
@@ -1801,13 +1785,10 @@ def bow(delaytime):
 
 def bye(times, dirr):
 
-  print_c("Bye %d times ", times)
-
   stand()
 
   if (dirr == 0):
 
-    print_c("with right hand\n", times)
     setServoPulse(servoE, stE + 80)
     setServoPulse(servoF, stF - 70)
     for i in range(times):
@@ -1827,7 +1808,6 @@ def bye(times, dirr):
 
 
   if (dirr == 1):
-    print_c("with left hand\n", times)
     setServoPulse(servoB, stB - 50)
     setServoPulse(servoC, stC + 80)
     for i in range(times):
@@ -1850,7 +1830,6 @@ def bye(times, dirr):
 
   if (dirr == 2):
 
-    print_c("with both hand\n", times)
 
     setServoPulse(servoB, stB - 50)
     setServoPulse(servoC, stC + 80)
@@ -1883,13 +1862,10 @@ def bye(times, dirr):
 
 def nadenade(times, dirr):
 
-  print_c("Nadenade %d times\n", times)
-
   stand()
 
   if (dirr):
 
-    print_c("with left hand\n", times)
     setServoPulse(servoC, stC + 80)
 
     for i in range(times):
@@ -1910,7 +1886,6 @@ def nadenade(times, dirr):
 
   if (not dirr):
 
-    print_c("with right hand\n", times)
     setServoPulse(servoF, stF - 60)
     for i in range(times):
 
