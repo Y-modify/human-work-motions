@@ -2,22 +2,12 @@
 
 import math
 import time
-from humanoid import Humanoid
 from threading import Thread
-import pybullet
 
 class Motions(object):
-    def __init__(self, real=False):
+    def __init__(self, robot):
         self.kI = 0.5
-
-        if real:
-            self.robot = Humanoid("yamax.urdf", real=True)
-        else:
-            pybullet.connect(pybullet.GUI)
-            self.robot = Humanoid("yamax.urdf", bullet_client=pybullet)
-            pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
-            pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_MOUSE_PICKING, 0)
-            pybullet.resetDebugVisualizerCamera(0.7 + 1, 75, -15, [0,0,0])
+        self.robot = robot
 
         # Port definition
         if self.robot.is_real:
