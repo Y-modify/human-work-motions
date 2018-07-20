@@ -29,9 +29,7 @@ class ActionBuffer(object):
         return len(self._timepoints) == 1
 
 class LegacyLoader(object):
-    def __init__(self, motions=None):
-        if motions is None:
-            import Motions as motions
+    def __init__(self, motions):
         self.motions = motions
         self.motions.delay = self.__delay
         self.motions.setServoPulse = self.__setServoPulse
