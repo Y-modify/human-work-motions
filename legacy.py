@@ -1,22 +1,10 @@
-
+# Generated from Actions.ino and ActionFunctions.ino
 
 import math
 import time
 from humanoid import Humanoid
 from threading import Thread
 import pybullet
-
-# /*************************************
-#   Actions - YamaX Arduino Core v3.0
-#   Motor control block
-#   made by Nyanyan, Y-modify
-#   Copyright © 2017 Y-modify All Rights Reserved.
-
-#   define "stand"'s value, then +- to these values
-# *************************************/
-
-#include <Adafruit_PWMServoDriver.h>
-#include <Wire.h>
 
 pybullet.connect(pybullet.GUI)
 
@@ -33,25 +21,14 @@ if not robot.is_real:
 def setServoPulse(idx, deg):
     if idx is not None:
         robot.set_joint_state(idx-8, (deg - 90) / 180 * math.pi)
-    # robot.step()
-
-# /*****Object Making*****/
-# Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(0x40)
-# Adafruit_PWMServoDriver pwm2 = Adafruit_PWMServoDriver(0x41)
 
 def delay(ms):
     time.sleep(ms/1000)
-    # t = time.time()
-    # while time.time() - t < ms / 1000:
-    #     robot.step()
-    #     time.sleep(0.01)
-
 
 def print_c(fmt, *args):
     print(fmt)
 
-# /*****Servo Ports Definition*****/
-
+# Port definition
 if robot.is_real:
     servoA = 8
 
@@ -144,13 +121,11 @@ else:
     stT = 90
     stU = 90
 
-# /*****Initialize Servo Driver*****/
+# Initialize Servo Driver
 def ServoInit():
   delay(100)
 
-# /*****
-
-  # /*****Base Functions*****/
+# Base Functions
 def stand():
   setServoPulse(servoA, stA)
 
@@ -302,9 +277,8 @@ def resetCrouch():
 
 
 
-# /*****Walking*****/
-
-# /*****begins*****/
+# Walking
+# begins
 def LEFTwalkBeginUp(frame):
   for i in range(4+1):
     setServoPulse(servoA, stA)
@@ -545,8 +519,7 @@ def LEFTbackBeginDown(frame):
     delay(frame)
 
 
-
-# /*****walking*****/
+# walking
 def leftEndFoward(frame):
   for i in range(8+1):
     setServoPulse(servoA, stA)
@@ -795,7 +768,7 @@ def rightDown(frame):
 
 
 
-# /*****back*****/
+# back
 def backLEFTEndFoward(frame):
   for i in range(8+1):
     setServoPulse(servoA, stA)
@@ -1066,7 +1039,7 @@ def backRIGHTToCrouch(frame):
 
 
 
-# /*****turn*****/
+# turn
 def turnRightLEFTToCrouch(frame):
   for i in range(8+1):
     setServoPulse(servoA, stA)
@@ -1127,8 +1100,7 @@ def turnLeftRIGHTToCrouch(frame):
 
 
 
-# /*****crab*****/
-
+# crab
 def RIGHTrightCrabFoward(frame):
   for i in range(4+1):
     setServoPulse(servoA, stA)
@@ -1439,7 +1411,7 @@ def LEFTrightCrabDown(frame):
 
 
 
-# /*****dogeza*****/
+# dogeza
 def seiza1():
   for i in range(10+1):
     setServoPulse(servoA, stA)
@@ -1470,9 +1442,7 @@ def seiza1():
     delay(40)
 
 
-
-# /*****sit*****/
-
+# sit
 def sitdown1():
   for i in range(8+1):
     setServoPulse(servoA, stA)
