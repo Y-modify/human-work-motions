@@ -274,7 +274,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - i * kI)  # モル生えるwww
+            self.setServoPulse(self.servoI, self.stI - i * self.kI)  # モル生えるwww
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 20)
@@ -303,7 +303,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - kI*4)
+            self.setServoPulse(self.servoI, self.stI - self.kI*4)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 20)
@@ -331,7 +331,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20 + i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - kI * 4)
+            self.setServoPulse(self.servoI, self.stI - self.kI * 4)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 20 - i * 0.5)
@@ -502,7 +502,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - kI*4)
+            self.setServoPulse(self.servoI, self.stI - self.kI*4)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -531,7 +531,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - kI*4 + i * 4)
+            self.setServoPulse(self.servoI, self.stI - self.kI*4 + i * 4)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24 + i)
@@ -560,7 +560,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - i * 5)
-            self.setServoPulse(self.servoI, self.stI - kI * 4 - i * 2)
+            self.setServoPulse(self.servoI, self.stI - self.kI * 4 - i * 2)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -589,7 +589,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH + i * 5)
-            self.setServoPulse(self.servoI, self.stI - kI*6 - i * 2)
+            self.setServoPulse(self.servoI, self.stI - self.kI*6 - i * 2)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -618,7 +618,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - kI * 6)
+            self.setServoPulse(self.servoI, self.stI - self.kI * 6)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -647,7 +647,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - kI*6)
+            self.setServoPulse(self.servoI, self.stI - self.kI*6)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -676,7 +676,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH - 20 + i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - kI*6 + i)
+            self.setServoPulse(self.servoI, self.stI - self.kI*6 + i)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
@@ -705,7 +705,7 @@ class Motions(object):
             self.setServoPulse(self.servoG, self.stG)
 
             self.setServoPulse(self.servoH, self.stH + 20 - i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - kI*6 + i)
+            self.setServoPulse(self.servoI, self.stI - self.kI*6 + i)
 
             self.setServoPulse(self.servoK, self.stK)
             self.setServoPulse(self.servoL, self.stL - 24)
