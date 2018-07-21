@@ -6,86 +6,19 @@ from threading import Thread
 
 
 class Motions(object):
-    def __init__(self, robot):
+    def __init__(self, robot, portmap, stand_positions):
         self.kI = 0.5
         self.robot = robot
 
-        # Port definition
-        self.portmap = {
-            "A": 8,
+        if isinstance(portmap, dict):
+            self.portmap = portmap["real"] if self.robot.is_real else portmap["simulator"]
+        else:
+            self.portmap = portmap
 
-            "B": None,
-            "C": None,
-            "D": None,
-
-            "E": 7,
-            "F": None,
-            "G": 5,
-
-            "H": 10,
-            "I": 9,
-
-            "K": 4,
-            "L": 3,
-            "M": 2,
-            "N": 1,
-            "O": 0,
-
-            "Q": 11,
-            "R": 12,
-            "S": 13,
-            "T": 14,
-            "U": 15,
-        } if self.robot.is_real else {
-            "A": 1,
-
-            "B": 5,
-            "C": 6,
-            "D": 7,
-
-            "E": 2,
-            "F": 3,
-            "G": 4,
-
-            "H": 8,
-            "I": 9,
-
-            "K": 15,
-            "L": 16,
-            "M": 17,
-            "N": 18,
-            "O": 19,
-
-            "Q": 10,
-            "R": 11,
-            "S": 12,
-            "T": 13,
-            "U": 14
-        }
-
-        self.stand_positions = {
-            "A": 80,
-            "B": 70,
-            "C": 80,
-            "D": 140,
-            "E": 90,
-            "F": 70,
-            "G": 20,
-            "H": 90,
-            "I": 120,
-            "K": 80,
-            "L": 70,
-            "M": 105,
-            "N": 105,
-            "O": 35,
-            "Q": 98,
-            "R": 120,
-            "S": 100,
-            "T": 75,
-            "U": 148,
-        } if self.robot.is_real else {
-            chr(c): 90 for c in range(ord('A'), ord('U')+1)
-        }
+        if isinstance(stand_positions, dict):
+            self.stand_positions = stand_positions["real"] if self.robot.is_real else stand_positions["simulator"]
+        else:
+            self.stand_positions = stand_positions
 
     def setServoPulse(self, idx, deg):
         if idx is not None:
