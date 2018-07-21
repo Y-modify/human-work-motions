@@ -11,97 +11,81 @@ class Motions(object):
         self.robot = robot
 
         # Port definition
-        if self.robot.is_real:
-            self.servoA = 8
+        self.portmap = {
+            "A": 8,
 
-            self.servoB = None
-            self.servoC = None
-            self.servoD = None
+            "B": None,
+            "C": None,
+            "D": None,
 
-            self.servoE = 7
-            self.servoF = None
-            self.servoG = 5
+            "E": 7,
+            "F": None,
+            "G": 5,
 
-            self.servoH = 10
-            self.servoI = 9
+            "H": 10,
+            "I": 9,
 
-            self.servoK = 4
-            self.servoL = 3
-            self.servoM = 2
-            self.servoN = 1
-            self.servoO = 0
+            "K": 4,
+            "L": 3,
+            "M": 2,
+            "N": 1,
+            "O": 0,
 
-            self.servoQ = 11
-            self.servoR = 12
-            self.servoS = 13
-            self.servoT = 14
-            self.servoU = 15
-        else:
-            self.servoA = 1
+            "Q": 11,
+            "R": 12,
+            "S": 13,
+            "T": 14,
+            "U": 15,
+        } if self.robot.is_real else {
+            "A": 1,
 
-            self.servoB = 5
-            self.servoC = 6
-            self.servoD = 7
+            "B": 5,
+            "C": 6,
+            "D": 7,
 
-            self.servoE = 2
-            self.servoF = 3
-            self.servoG = 4
+            "E": 2,
+            "F": 3,
+            "G": 4,
 
-            self.servoH = 8
-            self.servoI = 9
+            "H": 8,
+            "I": 9,
 
-            self.servoK = 15
-            self.servoL = 16
-            self.servoM = 17
-            self.servoN = 18
-            self.servoO = 19
+            "K": 15,
+            "L": 16,
+            "M": 17,
+            "N": 18,
+            "O": 19,
 
-            self.servoQ = 10
-            self.servoR = 11
-            self.servoS = 12
-            self.servoT = 13
-            self.servoU = 14
+            "Q": 10,
+            "R": 11,
+            "S": 12,
+            "T": 13,
+            "U": 14
+        }
 
-        if self.robot.is_real:
-            self.stA = 80
-            self.stB = 70
-            self.stC = 80
-            self.stD = 140
-            self.stE = 90
-            self.stF = 70
-            self.stG = 20
-            self.stH = 90
-            self.stI = 120
-            self.stK = 80
-            self.stL = 70
-            self.stM = 105
-            self.stN = 105
-            self.stO = 35
-            self.stQ = 98
-            self.stR = 120
-            self.stS = 100
-            self.stT = 75
-            self.stU = 148
-        else:
-            self.stA = 90
-            self.stB = 90
-            self.stC = 90
-            self.stD = 90
-            self.stE = 90
-            self.stF = 90
-            self.stG = 90
-            self.stH = 90
-            self.stI = 90
-            self.stK = 90
-            self.stL = 90
-            self.stM = 90
-            self.stN = 90
-            self.stO = 90
-            self.stQ = 90
-            self.stR = 90
-            self.stS = 90
-            self.stT = 90
-            self.stU = 90
+        self.stand_positions = {
+            "A": 80,
+            "B": 70,
+            "C": 80,
+            "D": 140,
+            "E": 90,
+            "F": 70,
+            "G": 20,
+            "H": 90,
+            "I": 120,
+            "K": 80,
+            "L": 70,
+            "M": 105,
+            "N": 105,
+            "O": 35,
+            "Q": 98,
+            "R": 120,
+            "S": 100,
+            "T": 75,
+            "U": 148,
+        } if self.robot.is_real else {
+            chr(c): 90 for c in range(ord('A'), ord('U')+1)
+        }
 
     def setServoPulse(self, idx, deg):
         if idx is not None:
@@ -114,147 +98,128 @@ class Motions(object):
     def ServoInit(self):
         self.delay(100)
 
+    def setServo(self, name, deg):
+        self.setServoPulse(self.portmap[name],
+                           self.stand_positions[name] + deg)
+
     # Base Functions
     def stand(self):
-        self.setServoPulse(self.servoA, self.stA)
-
-        self.setServoPulse(self.servoB, self.stB)
-        self.setServoPulse(self.servoC, self.stC)
-        self.setServoPulse(self.servoD, self.stD)
-
-        self.setServoPulse(self.servoE, self.stE)
-        self.setServoPulse(self.servoF, self.stF)
-        self.setServoPulse(self.servoG, self.stG)
-
-        self.setServoPulse(self.servoH, self.stH)
-        self.setServoPulse(self.servoI, self.stI)
-
-        self.setServoPulse(self.servoK, self.stK)
-        self.setServoPulse(self.servoL, self.stL)
-        self.setServoPulse(self.servoM, self.stM)
-        self.setServoPulse(self.servoN, self.stN)
-        self.setServoPulse(self.servoO, self.stO)
-
-        self.setServoPulse(self.servoQ, self.stQ)
-        self.setServoPulse(self.servoR, self.stR)
-        self.setServoPulse(self.servoS, self.stS)
-        self.setServoPulse(self.servoT, self.stT)
-        self.setServoPulse(self.servoU, self.stU)
-    #
+        for name, _ in self.stand_positions.items():
+            self.setServo(name, 0)
 
     def bowing(self):
         for i in range(5+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - i * 9)
+            self.setServo("H", 0)
+            self.setServo("I",  - i * 9)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + i * 4)
-            self.setServoPulse(self.servoM, self.stM)
-            self.setServoPulse(self.servoN, self.stN)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + i * 4)
+            self.setServo("M", 0)
+            self.setServo("N", 0)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - i * 4)
-            self.setServoPulse(self.servoS, self.stS)
-            self.setServoPulse(self.servoT, self.stT)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  - i * 4)
+            self.setServo("S", 0)
+            self.setServo("T", 0)
+            self.setServo("U", 0)
 
             self.delay(40)
 
     def resetBowing(self):
         for i in range(5+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 45 + i * 9)
+            self.setServo("H", 0)
+            self.setServo("I",  - 45 + i * 9)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 20 - i * 4)
-            self.setServoPulse(self.servoM, self.stM)
-            self.setServoPulse(self.servoN, self.stN)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + 20 - i * 4)
+            self.setServo("M", 0)
+            self.setServo("N", 0)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 20 + i * 4)
-            self.setServoPulse(self.servoS, self.stS)
-            self.setServoPulse(self.servoT, self.stT)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 20 + i * 4)
+            self.setServo("S", 0)
+            self.setServo("T", 0)
+            self.setServo("U", 0)
 
             self.delay(40)
 
     def crouch(self):
         for i in range(5+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI)
+            self.setServo("H", 0)
+            self.setServo("I", 0)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - i * 4)
-            self.setServoPulse(self.servoM, self.stM + i * 8)
-            self.setServoPulse(self.servoN, self.stN + i * 4)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - i * 4)
+            self.setServo("M",  + i * 8)
+            self.setServo("N",  + i * 4)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + i * 4)
-            self.setServoPulse(self.servoS, self.stS - i * 8)
-            self.setServoPulse(self.servoT, self.stT - i * 4)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + i * 4)
+            self.setServo("S",  - i * 8)
+            self.setServo("T",  - i * 4)
+            self.setServo("U", 0)
 
             self.delay(40)
 
     def resetCrouch(self):
         for i in range(5+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI)
+            self.setServo("H", 0)
+            self.setServo("I", 0)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20 + i * 4)
-            self.setServoPulse(self.servoM, self.stM + 40 - i * 8)
-            self.setServoPulse(self.servoN, self.stN + 20 - i * 4)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20 + i * 4)
+            self.setServo("M",  + 40 - i * 8)
+            self.setServo("N",  + 20 - i * 4)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20 - i * 4)
-            self.setServoPulse(self.servoS, self.stS - 40 + i * 8)
-            self.setServoPulse(self.servoT, self.stT - 20 + i * 4)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20 - i * 4)
+            self.setServo("S",  - 40 + i * 8)
+            self.setServo("T",  - 20 + i * 4)
+            self.setServo("U", 0)
 
             self.delay(40)
 
@@ -263,461 +228,461 @@ class Motions(object):
 
     def LEFTwalkBeginUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - i * self.kI)  # モル生えるwww
+            self.setServo("H",  - i * 2.5)
+            self.setServo("I",  - i * self.kI)  # モル生えるwww
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + i * 1.25)
 
             self.delay(frame)
 
     def LEFTwalkBeginFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - self.kI*4)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - self.kI*4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40 + i * 5)
-            self.setServoPulse(self.servoT, self.stT - 20 + i * 5)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40 + i * 5)
+            self.setServo("T",  - 20 + i * 5)
+            self.setServo("U",  + 10)
             self.delay(frame)
 
     def LEFTwalkBeginDown(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - self.kI * 4)
+            self.setServo("H",  - 20 + i * 2.5)
+            self.setServo("I",  - self.kI * 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20 - i * 0.5)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20 - i * 0.5)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20 + i + 0.5)
-            self.setServoPulse(self.servoS, self.stS - 20 + i * 2.5)
-            self.setServoPulse(self.servoT, self.stT + i * 3)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20 + i + 0.5)
+            self.setServo("S",  - 20 + i * 2.5)
+            self.setServo("T",  + i * 3)
+            self.setServo("U",  + 10 - i * 1.25)
             self.delay(frame)
 
     def RIGHTwalkBeginUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H",  + i * 2.5)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - i * 1.25)
 
             self.delay(frame)
 
     def RIGHTwalkBeginFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H",  + 20)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40 - i * 5)
-            self.setServoPulse(self.servoN, self.stN + 20 - i * 5)
-            self.setServoPulse(self.servoO, self.stO - 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40 - i * 5)
+            self.setServo("N",  + 20 - i * 5)
+            self.setServo("O",  - 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 10)
             self.delay(frame)
 
     def RIGHTwalkBeginDown(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20 - i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H",  + 20 - i * 2.5)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 20 - i * 2.5)
-            self.setServoPulse(self.servoN, self.stN - i * 3)
-            self.setServoPulse(self.servoO, self.stO - 10 + i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 20 - i * 2.5)
+            self.setServo("N",  - i * 3)
+            self.setServo("O",  - 10 + i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 10 + i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 10 + i * 1.25)
             self.delay(frame)
 
     def LEFTbackBeginFoward(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - 20 + i * 2)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - 20 + i * 2)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20 - i * 3)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20 - i * 2)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20 - i * 3)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20 - i * 2)
+            self.setServo("U",  + 10)
             self.delay(frame)
 
     def LEFTbackBeginDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 4)
-            self.setServoPulse(self.servoS, self.stS - 40 + i * 4)
-            self.setServoPulse(self.servoT, self.stT - 36 + i * 2)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 4)
+            self.setServo("S",  - 40 + i * 4)
+            self.setServo("T",  - 36 + i * 2)
+            self.setServo("U",  + 10 - i * 2.5)
             self.delay(frame)
 
     # walking
 
     def leftEndFoward(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - self.kI*4)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - self.kI*4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + i * 5)
-            self.setServoPulse(self.servoN, self.stN - 20 + i * 5)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + i * 5)
+            self.setServo("N",  - 20 + i * 5)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10)
 
             self.delay(frame)
 
     def leftEnd(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - self.kI*4 + i * 4)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - self.kI*4 + i * 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24 + i)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24 + i)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24 - i)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24 - i)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10 - i * 2.5)
 
             self.delay(frame)
 
     def leftUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - i * 5)
-            self.setServoPulse(self.servoI, self.stI - self.kI * 4 - i * 2)
+            self.setServo("H",  - i * 5)
+            self.setServo("I",  - self.kI * 4 - i * 2)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM)
-            self.setServoPulse(self.servoN, self.stN - 24 + i)
-            self.setServoPulse(self.servoO, self.stO + i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M", 0)
+            self.setServo("N",  - 24 + i)
+            self.setServo("O",  + i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + i * 2.5)
 
             self.delay(frame)
 
     def rightUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + i * 5)
-            self.setServoPulse(self.servoI, self.stI - self.kI*6 - i * 2)
+            self.setServo("H",  + i * 5)
+            self.setServo("I",  - self.kI*6 - i * 2)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS)
-            self.setServoPulse(self.servoT, self.stT + 24 - i)
-            self.setServoPulse(self.servoU, self.stU - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S", 0)
+            self.setServo("T",  + 24 - i)
+            self.setServo("U",  - i * 2.5)
 
             self.delay(frame)
 
     def leftFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - self.kI * 6)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - self.kI * 6)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + i * 5)
-            self.setServoPulse(self.servoN, self.stN - 20 + i * 4.25)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + i * 5)
+            self.setServo("N",  - 20 + i * 4.25)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - 40 + i * 5)
-            self.setServoPulse(self.servoT, self.stT - 20 + i * 5)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - 40 + i * 5)
+            self.setServo("T",  - 20 + i * 5)
+            self.setServo("U",  + 10)
 
             self.delay(frame)
 
     def rightFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - self.kI*6)
+            self.setServo("H",  + 20)
+            self.setServo("I",  - self.kI*6)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + 40 - i * 5)
-            self.setServoPulse(self.servoN, self.stN + 20 - i * 5)
-            self.setServoPulse(self.servoO, self.stO - 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + 40 - i * 5)
+            self.setServo("N",  + 20 - i * 5)
+            self.setServo("O",  - 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - i * 5)
-            self.setServoPulse(self.servoT, self.stT + 20 - i * 4.25)
-            self.setServoPulse(self.servoU, self.stU - 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - i * 5)
+            self.setServo("T",  + 20 - i * 4.25)
+            self.setServo("U",  - 10)
 
             self.delay(frame)
 
     def leftDown(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - self.kI*6 + i)
+            self.setServo("H",  - 20 + i * 2.5)
+            self.setServo("I",  - self.kI*6 + i)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + 20 + i * 2.5)
-            self.setServoPulse(self.servoN, self.stN - 3 + i * 2.875)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + 20 + i * 2.5)
+            self.setServo("N",  - 3 + i * 2.875)
+            self.setServo("O",  + 10 - i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - 20 + i * 2.5)
-            self.setServoPulse(self.servoT, self.stT + i * 3)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - 20 + i * 2.5)
+            self.setServo("T",  + i * 3)
+            self.setServo("U",  + 10 - i * 1.25)
 
             self.delay(frame)
 
     def rightDown(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20 - i * 2.5)
-            self.setServoPulse(self.servoI, self.stI - self.kI*6 + i)
+            self.setServo("H",  + 20 - i * 2.5)
+            self.setServo("I",  - self.kI*6 + i)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24)
-            self.setServoPulse(self.servoM, self.stM + 20 - i * 2.5)
-            self.setServoPulse(self.servoN, self.stN - i * 3)
-            self.setServoPulse(self.servoO, self.stO - 10 + i * 1.25)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24)
+            self.setServo("M",  + 20 - i * 2.5)
+            self.setServo("N",  - i * 3)
+            self.setServo("O",  - 10 + i * 1.25)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24)
-            self.setServoPulse(self.servoS, self.stS - 20 - i * 2.5)
-            self.setServoPulse(self.servoT, self.stT + 3 - i * 2.875)
-            self.setServoPulse(self.servoU, self.stU - 10 + i * 1.25)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24)
+            self.setServo("S",  - 20 - i * 2.5)
+            self.setServo("T",  + 3 - i * 2.875)
+            self.setServo("U",  - 10 + i * 1.25)
 
             self.delay(frame)
 
@@ -725,603 +690,603 @@ class Motions(object):
 
     def backLEFTEndFoward(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 4 - i * 3)
-            self.setServoPulse(self.servoM, self.stM + 24 + i * 2)
-            self.setServoPulse(self.servoN, self.stN + 28 - i)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  + 4 - i * 3)
+            self.setServo("M",  + 24 + i * 2)
+            self.setServo("N",  + 28 - i)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10)
             self.delay(frame)
 
     def backLEFTEnd(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4 + i)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - 4 + i)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + -20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  + -20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10 - i * 2.5)
             self.delay(frame)
 
     def backLEFTUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  - i * 5)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 4)
-            self.setServoPulse(self.servoM, self.stM + 24)
-            self.setServoPulse(self.servoN, self.stN + 28)
-            self.setServoPulse(self.servoO, self.stO + i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  + 4)
+            self.setServo("M",  + 24)
+            self.setServo("N",  + 28)
+            self.setServo("O",  + i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + i * 2.5)
             self.delay(frame)
 
     def backLEFTFoward(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 4 - i * 3)
-            self.setServoPulse(self.servoM, self.stM + 24 + i * 2)
-            self.setServoPulse(self.servoN, self.stN + 28 - i)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K", 0)
+            self.setServo("L",  + 4 - i * 3)
+            self.setServo("M",  + 24 + i * 2)
+            self.setServo("N",  + 28 - i)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20 - i * 3)
-            self.setServoPulse(self.servoS, self.stS - 40 + i * 2)
-            self.setServoPulse(self.servoT, self.stT - 20 - i)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20 - i * 3)
+            self.setServo("S",  - 40 + i * 2)
+            self.setServo("T",  - 20 - i)
+            self.setServo("U",  + 10)
             self.delay(frame)
 
     def backLEFTDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 4)
-            self.setServoPulse(self.servoS, self.stS - 24)
-            self.setServoPulse(self.servoT, self.stT - 28)
-            self.setServoPulse(self.servoU, self.stU + 10 - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 4)
+            self.setServo("S",  - 24)
+            self.setServo("T",  - 28)
+            self.setServo("U",  + 10 - i * 2.5)
             self.delay(frame)
 
     def backRIGHTUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  + i * 5)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 4)
-            self.setServoPulse(self.servoS, self.stS - 24)
-            self.setServoPulse(self.servoT, self.stT - 28)
-            self.setServoPulse(self.servoU, self.stU - i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 4)
+            self.setServo("S",  - 24)
+            self.setServo("T",  - 28)
+            self.setServo("U",  - i * 2.5)
             self.delay(frame)
 
     def backRIGHTFoward(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  + 20)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20 + i * 3)
-            self.setServoPulse(self.servoM, self.stM + 40 - i * 2)
-            self.setServoPulse(self.servoN, self.stN + 20 + i)
-            self.setServoPulse(self.servoO, self.stO - 10)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20 + i * 3)
+            self.setServo("M",  + 40 - i * 2)
+            self.setServo("N",  + 20 + i)
+            self.setServo("O",  - 10)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 4 + i * 3)
-            self.setServoPulse(self.servoS, self.stS - 24 - i * 2)
-            self.setServoPulse(self.servoT, self.stT - 28 + i)
-            self.setServoPulse(self.servoU, self.stU - 10)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 4 + i * 3)
+            self.setServo("S",  - 24 - i * 2)
+            self.setServo("T",  - 28 + i)
+            self.setServo("U",  - 10)
             self.delay(frame)
 
     def backRIGHTDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20 - i * 5)
-            self.setServoPulse(self.servoI, self.stI - 4)
+            self.setServo("H",  + 20 - i * 5)
+            self.setServo("I",  - 4)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 4)
-            self.setServoPulse(self.servoM, self.stM + 24)
-            self.setServoPulse(self.servoN, self.stN + 28)
-            self.setServoPulse(self.servoO, self.stO - 10 + i * 2.5)
+            self.setServo("K", 0)
+            self.setServo("L",  + 4)
+            self.setServo("M",  + 24)
+            self.setServo("N",  + 28)
+            self.setServo("O",  - 10 + i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 10 + i * 2.5)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 10 + i * 2.5)
             self.delay(frame)
 
     def backRIGHTToCrouch(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H", 0)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 4 - i * 3)
-            self.setServoPulse(self.servoM, self.stM + 24 + i * 2)
-            self.setServoPulse(self.servoN, self.stN + 28 - i)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + 4 - i * 3)
+            self.setServo("M",  + 24 + i * 2)
+            self.setServo("N",  + 28 - i)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U", 0)
             self.delay(frame)
 
     # turn
 
     def turnRightLEFTToCrouch(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H", 0)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - i * 5)
-            self.setServoPulse(self.servoT, self.stT + 24 - i * 5.5)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - i * 5)
+            self.setServo("T",  + 24 - i * 5.5)
+            self.setServo("U", 0)
             self.delay(frame)
 
     def turnLeftRIGHTToCrouch(self, frame):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 10)
+            self.setServo("H", 0)
+            self.setServo("I",  - 10)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + i * 5)
-            self.setServoPulse(self.servoN, self.stN - 24 + i * 5.5)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + i * 5)
+            self.setServo("N",  - 24 + i * 5.5)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U", 0)
             self.delay(frame)
 
     # crab
 
     def RIGHTrightCrabFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  + 20)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - i * 2)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - 10)
+            self.setServo("K",  - i * 2)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - 10)
 
-            self.setServoPulse(self.servoQ, self.stQ + i * 2)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 10)
+            self.setServo("Q",  + i * 2)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 10)
 
             self.delay(frame)
 
     def RIGHTrightCrabDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20 - i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  + 20 - i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - 10 + i * 4)
+            self.setServo("K",  - 8)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - 10 + i * 4)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 10 + i)
+            self.setServo("Q",  + 8)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 10 + i)
 
             self.delay(frame)
 
     def RIGHTleftCrabUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  - i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 6 - i * 2.5)
+            self.setServo("K",  - 8)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 6 - i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 6 + i * 2)
+            self.setServo("Q",  + 8)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 6 + i * 2)
 
             self.delay(frame)
 
     def RIGHTleftCrabFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8 + i * 2)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - 4)
+            self.setServo("K",  - 8 + i * 2)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - 4)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8 - i * 2)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 4)
+            self.setServo("Q",  + 8 - i * 2)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 4)
 
             self.delay(frame)
 
     def RIGHTleftCrabDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - 4 + i)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - 4 + i)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 4 - i)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 4 - i)
 
             self.delay(frame)
 
     def LEFTleftCrabFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  - 20)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - i * 2)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10)
+            self.setServo("K",  - i * 2)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10)
 
-            self.setServoPulse(self.servoQ, self.stQ + i * 2)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10)
+            self.setServo("Q",  + i * 2)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10)
 
             self.delay(frame)
 
     def LEFTleftCrabDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH - 20 + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  - 20 + i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 10 - i * 4)
+            self.setServo("K",  - 8)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 10 - i * 4)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 10 - i)
+            self.setServo("Q",  + 8)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 10 - i)
 
             self.delay(frame)
 
     def LEFTrightCrabUp(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  + i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO - 6 + i * 2.5)
+            self.setServo("K",  - 8)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  - 6 + i * 2.5)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU + 6 - i * 2)
+            self.setServo("Q",  + 8)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  + 6 - i * 2)
 
             self.delay(frame)
 
     def LEFTrightCrabFoward(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  + 20)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK - 8 + i * 2)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 4)
+            self.setServo("K",  - 8 + i * 2)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 4)
 
-            self.setServoPulse(self.servoQ, self.stQ + 8 - i * 2)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 4)
+            self.setServo("Q",  + 8 - i * 2)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 4)
 
             self.delay(frame)
 
     def LEFTrightCrabDown(self, frame):
         for i in range(4+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH + 20 - i * 5)
-            self.setServoPulse(self.servoI, self.stI - 15)
+            self.setServo("H",  + 20 - i * 5)
+            self.setServo("I",  - 15)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 20)
-            self.setServoPulse(self.servoM, self.stM + 40)
-            self.setServoPulse(self.servoN, self.stN + 20)
-            self.setServoPulse(self.servoO, self.stO + 4 - i)
+            self.setServo("K", 0)
+            self.setServo("L",  - 20)
+            self.setServo("M",  + 40)
+            self.setServo("N",  + 20)
+            self.setServo("O",  + 4 - i)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 20)
-            self.setServoPulse(self.servoS, self.stS - 40)
-            self.setServoPulse(self.servoT, self.stT - 20)
-            self.setServoPulse(self.servoU, self.stU - 4 + i)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 20)
+            self.setServo("S",  - 40)
+            self.setServo("T",  - 20)
+            self.setServo("U",  - 4 + i)
 
             self.delay(frame)
 
@@ -1329,30 +1294,30 @@ class Motions(object):
 
     def seiza1(self):
         for i in range(10+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI)
+            self.setServo("H", 0)
+            self.setServo("I", 0)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - i * 3)
-            self.setServoPulse(self.servoM, self.stM + i * 7)
-            self.setServoPulse(self.servoN, self.stN + i * 4)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - i * 3)
+            self.setServo("M",  + i * 7)
+            self.setServo("N",  + i * 4)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + i * 3)
-            self.setServoPulse(self.servoS, self.stS - i * 7)
-            self.setServoPulse(self.servoT, self.stT - i * 4)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + i * 3)
+            self.setServo("S",  - i * 7)
+            self.setServo("T",  - i * 4)
+            self.setServo("U", 0)
 
             self.delay(40)
 
@@ -1360,117 +1325,117 @@ class Motions(object):
 
     def sitdown1(self):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - i * 4.5)
+            self.setServo("H", 0)
+            self.setServo("I",  - i * 4.5)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + i * 2)
-            self.setServoPulse(self.servoM, self.stM)
-            self.setServoPulse(self.servoN, self.stN)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + i * 2)
+            self.setServo("M", 0)
+            self.setServo("N", 0)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - i * 2)
-            self.setServoPulse(self.servoS, self.stS)
-            self.setServoPulse(self.servoT, self.stT)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  - i * 2)
+            self.setServo("S", 0)
+            self.setServo("T", 0)
+            self.setServo("U", 0)
 
             self.delay(50)
 
     def sitdown2(self):
         for i in range(16+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 36 - i * 2.25)
+            self.setServo("H", 0)
+            self.setServo("I",  - 36 - i * 2.25)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 16 + i * 0.5)
-            self.setServoPulse(self.servoM, self.stM + i)
-            self.setServoPulse(self.servoN, self.stN - i * 1.5)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + 16 + i * 0.5)
+            self.setServo("M",  + i)
+            self.setServo("N",  - i * 1.5)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 16 - i * 0.5)
-            self.setServoPulse(self.servoS, self.stS - i)
-            self.setServoPulse(self.servoT, self.stT + i * 1.5)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 16 - i * 0.5)
+            self.setServo("S",  - i)
+            self.setServo("T",  + i * 1.5)
+            self.setServo("U", 0)
 
             self.delay(50)
 
     def situp1(self):
         for i in range(8+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 72)
+            self.setServo("H", 0)
+            self.setServo("I",  - 72)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL + 24 - i * 6)
-            self.setServoPulse(self.servoM, self.stM + 16 - i)
-            self.setServoPulse(self.servoN, self.stN - 24)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  + 24 - i * 6)
+            self.setServo("M",  + 16 - i)
+            self.setServo("N",  - 24)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR - 24 + i * 6)
-            self.setServoPulse(self.servoS, self.stS - 16 + i)
-            self.setServoPulse(self.servoT, self.stT + 24)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  - 24 + i * 6)
+            self.setServo("S",  - 16 + i)
+            self.setServo("T",  + 24)
+            self.setServo("U", 0)
 
             self.delay(60)
 
     def situp2(self):
         for i in range(16+1):
-            self.setServoPulse(self.servoA, self.stA)
+            self.setServo("A", 0)
 
-            self.setServoPulse(self.servoB, self.stB)
-            self.setServoPulse(self.servoC, self.stC)
-            self.setServoPulse(self.servoD, self.stD)
+            self.setServo("B", 0)
+            self.setServo("C", 0)
+            self.setServo("D", 0)
 
-            self.setServoPulse(self.servoE, self.stE)
-            self.setServoPulse(self.servoF, self.stF)
-            self.setServoPulse(self.servoG, self.stG)
+            self.setServo("E", 0)
+            self.setServo("F", 0)
+            self.setServo("G", 0)
 
-            self.setServoPulse(self.servoH, self.stH)
-            self.setServoPulse(self.servoI, self.stI - 72 + i * 4.5)
+            self.setServo("H", 0)
+            self.setServo("I",  - 72 + i * 4.5)
 
-            self.setServoPulse(self.servoK, self.stK)
-            self.setServoPulse(self.servoL, self.stL - 24 + i * 1.5)
-            self.setServoPulse(self.servoM, self.stM + 8 - i * 0.5)
-            self.setServoPulse(self.servoN, self.stN - 24 + i * 1.5)
-            self.setServoPulse(self.servoO, self.stO)
+            self.setServo("K", 0)
+            self.setServo("L",  - 24 + i * 1.5)
+            self.setServo("M",  + 8 - i * 0.5)
+            self.setServo("N",  - 24 + i * 1.5)
+            self.setServo("O", 0)
 
-            self.setServoPulse(self.servoQ, self.stQ)
-            self.setServoPulse(self.servoR, self.stR + 24 - i * 1.5)
-            self.setServoPulse(self.servoS, self.stS - 8 + i * 0.5)
-            self.setServoPulse(self.servoT, self.stT + 24 - i * 1.5)
-            self.setServoPulse(self.servoU, self.stU)
+            self.setServo("Q", 0)
+            self.setServo("R",  + 24 - i * 1.5)
+            self.setServo("S",  - 8 + i * 0.5)
+            self.setServo("T",  + 24 - i * 1.5)
+            self.setServo("U", 0)
 
             self.delay(50)
 
@@ -1630,12 +1595,12 @@ class Motions(object):
 
         for i in range(times):
 
-            self.setServoPulse(self.servoA, self.stA - 60)
+            self.setServo("A",  - 60)
             self.delay(200)
-            self.setServoPulse(self.servoA, self.stA + 60)
+            self.setServo("A",  + 60)
             self.delay(200)
 
-        self.setServoPulse(self.servoA, self.stA)
+        self.setServo("A", 0)
 
     def bow(self, delaytime):
 
@@ -1649,56 +1614,56 @@ class Motions(object):
 
         if (dirr == 0):
 
-            self.setServoPulse(self.servoE, self.stE + 80)
-            self.setServoPulse(self.servoF, self.stF - 70)
+            self.setServo("E",  + 80)
+            self.setServo("F",  - 70)
             for i in range(times):
 
                 tim = 20
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + 80 - j * 10)
+                    self.setServo("G",  + 80 - j * 10)
                     self.delay(tim)
 
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + j * 10)
+                    self.setServo("G",  + j * 10)
                     self.delay(tim)
 
         if (dirr == 1):
-            self.setServoPulse(self.servoB, self.stB - 50)
-            self.setServoPulse(self.servoC, self.stC + 80)
+            self.setServo("B",  - 50)
+            self.setServo("C",  + 80)
             for i in range(times):
 
                 tim = 20
                 for j in range(8):
 
-                    self.setServoPulse(self.servoD, self.stD - 80 + j * 10)
+                    self.setServo("D",  - 80 + j * 10)
                     self.delay(tim)
 
                 for j in range(8):
 
-                    self.setServoPulse(self.servoD, self.stD - j * 10)
+                    self.setServo("D",  - j * 10)
                     self.delay(tim)
 
         if (dirr == 2):
 
-            self.setServoPulse(self.servoB, self.stB - 50)
-            self.setServoPulse(self.servoC, self.stC + 80)
-            self.setServoPulse(self.servoE, self.stE + 50)
-            self.setServoPulse(self.servoF, self.stF - 60)
+            self.setServo("B",  - 50)
+            self.setServo("C",  + 80)
+            self.setServo("E",  + 50)
+            self.setServo("F",  - 60)
             for i in range(times):
 
                 tim = 20
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + 80 - j * 10)
-                    self.setServoPulse(self.servoD, self.stD - 80 + j * 10)
+                    self.setServo("G",  + 80 - j * 10)
+                    self.setServo("D",  - 80 + j * 10)
                     self.delay(tim)
 
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + j * 10)
-                    self.setServoPulse(self.servoD, self.stD - j * 10)
+                    self.setServo("G",  + j * 10)
+                    self.setServo("D",  - j * 10)
                     self.delay(tim)
 
     def nadenade(self, times, dirr):
@@ -1707,35 +1672,35 @@ class Motions(object):
 
         if (dirr):
 
-            self.setServoPulse(self.servoC, self.stC + 80)
+            self.setServo("C",  + 80)
 
             for i in range(times):
 
                 tim = 20
                 for j in range(8):
 
-                    self.setServoPulse(self.servoD, self.stD - 80 + j * 10)
+                    self.setServo("D",  - 80 + j * 10)
                     self.delay(tim)
 
                 for j in range(8):
 
-                    self.setServoPulse(self.servoD, self.stD - j * 10)
+                    self.setServo("D",  - j * 10)
                     self.delay(tim)
 
         if (not dirr):
 
-            self.setServoPulse(self.servoF, self.stF - 60)
+            self.setServo("F",  - 60)
             for i in range(times):
 
                 tim = 20
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + 80 - j * 10)
+                    self.setServo("G",  + 80 - j * 10)
                     self.delay(tim)
 
                 for j in range(8):
 
-                    self.setServoPulse(self.servoG, self.stG + j * 10)
+                    self.setServo("G",  + j * 10)
                     self.delay(tim)
 
     def sitDown(self):
