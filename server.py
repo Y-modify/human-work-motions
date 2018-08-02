@@ -15,6 +15,7 @@ with open('config/stand_positions.yml') as f:
 humanoid = Humanoid("yamax.urdf", real=True)
 motions = Motions(humanoid, portmap=portmap, stand_positions=stand_positions)
 robot = AsyncLoader(motions)
+robot.stand()
 
 class Control(WebSocket):
     def handleMessage(self):
