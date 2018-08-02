@@ -22,7 +22,7 @@ class Motions(object):
 
     def setServoPulse(self, idx, deg):
         if idx is not None:
-            self.robot.set_joint_state(idx-8, (deg - 90) / 180 * math.pi)
+            self.robot.set_joint_state(idx if self.robot.is_real else idx-8, (deg - 90) / 180 * math.pi)
 
     def delay(self, ms):
         time.sleep(ms/1000)
