@@ -34,6 +34,12 @@ class Control(WebSocket):
             # speed = 60 - (distance / 4)
             getattr(robot, motion)(fake_inf, 20)
             self.current_motion = motion
+        elif token[0] == 'sitdown':
+            robot.sitDown()
+            self.current_motion = 'sitdown'
+        elif token[0] == 'situp':
+            robot.sitUp()
+            self.current_motion = 'situp'
         else:
             print('Unknown command')
 
