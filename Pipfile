@@ -4,7 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+catkin-pkg = "*"
+"05d79e8" = {path = "./urdf_parser_py"}
 pyyaml = "*"
+lxml = "*"
+"adafruit-pca9685" = "*"
+"mpu6050-raspberrypi" = {git = "https://github.com/Tijndagamer/mpu6050", ref = "python3-dev"}
+"smbus2" = "*"
 
 [dev-packages]
 pybullet = "*"
