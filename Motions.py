@@ -370,7 +370,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  - 20 + i * 5)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  - 20)
@@ -634,7 +634,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  - 20)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  + 4 - i * 3)
@@ -690,7 +690,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  - i * 5)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  + 4)
@@ -718,7 +718,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  - 20)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  + 4 - i * 3)
@@ -746,7 +746,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  - 20 + i * 5)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  - 20)
@@ -774,7 +774,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  + i * 5)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  - 20)
@@ -802,7 +802,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  + 20)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  - 20 + i * 3)
@@ -830,7 +830,7 @@ class Motions(object):
             self.setServo("G", 0)
 
             self.setServo("H",  + 20 - i * 5)
-            self.setServo("I",  - 4)
+            self.setServo("I",  - self.kI - 2)
 
             self.setServo("K", 0)
             self.setServo("L",  + 4)
