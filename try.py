@@ -22,7 +22,8 @@ else:
     pybullet.resetDebugVisualizerCamera(0.7 + 1, 75, -15, [0, 0, 0])
 
 motions = Motions(robot, portmap=portmap, stand_positions=stand_positions)
-loader = SequentialLoader(motions)
-loader.stand()
-loader.delay(5000)
-loader.walk(10, 30)
+if not robot.is_real:
+    motions = SequentialLoader(motions)
+motions.stand()
+motions.delay(5000)
+motions.walk(10, 30)
