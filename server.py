@@ -1,4 +1,4 @@
-from LegacyAsyncHelper import LegacyAsyncHelper
+from AsyncLoader import AsyncLoader
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 import time
 import yaml
@@ -14,7 +14,7 @@ with open('config/stand_positions.yml') as f:
 
 humanoid = Humanoid("yamax.urdf", real=True)
 motions = Motions(humanoid, portmap=portmap, stand_positions=stand_positions)
-robot = LegacyAsyncHelper(motions)
+robot = AsyncLoader(motions)
 
 class Control(WebSocket):
     def handleMessage(self):

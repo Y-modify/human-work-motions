@@ -3,7 +3,7 @@ from threading import (Event, Thread)
 class StopThread(Exception):
     pass
 
-class LegacyAsyncHelper(object):
+class AsyncLoader(object):
     def __init__(self, motions):
         self.motions = motions
         self.motions.delay = self.__delay
