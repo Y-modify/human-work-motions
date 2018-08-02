@@ -1,9 +1,20 @@
 from LegacyAsyncHelper import LegacyAsyncHelper
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 import time
+import yaml
+from humanoid import Humanoid
 import math
+from Motions import Motions
 
-robot = LegacyAsyncHelper()
+with open('config/portmap.yml') as f:
+    portmap = yaml.load(f)
+
+with open('config/stand_positions.yml') as f:
+    stand_positions = yaml.load(f)
+
+humanoid = Humanoid("yamax.urdf", real=True)
+motions = Motions(humanoid, portmap=portmap, stand_positions=stand_positions)
+robot = LegacyAsyncHelper(motions)
 
 class Control(WebSocket):
     def handleMessage(self):

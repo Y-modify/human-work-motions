@@ -1,12 +1,11 @@
 from threading import (Event, Thread)
-import legacy
 
 class StopThread(Exception):
     pass
 
 class LegacyAsyncHelper(object):
-    def __init__(self):
-        self.motions = legacy
+    def __init__(self, motions):
+        self.motions = motions
         self.motions.delay = self.__delay
         self.stop = Event()
         self.thread = None
