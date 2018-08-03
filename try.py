@@ -41,6 +41,8 @@ motions.stand()
 while True:
     print('> ', end='')
     user_input = input().split()
+    if len(user_input) == 0:
+        continue
     action = user_input[0]
     arguments = map(int, user_input[1:])
     try:
