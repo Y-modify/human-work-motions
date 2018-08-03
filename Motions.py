@@ -188,7 +188,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def LEFTwalkBeginFoward(self, frame):
+    def LEFTwalkBeginForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -273,7 +273,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def RIGHTwalkBeginFoward(self, frame):
+    def RIGHTwalkBeginForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -329,7 +329,7 @@ class Motions(object):
             self.setServo("U",  - 10 + i * 1.25)
             self.delay(frame)
 
-    def LEFTbackBeginFoward(self, frame):
+    def LEFTbackBeginForward(self, frame):
         for i in range(8+1):
             self.setServo("A", 0)
 
@@ -387,7 +387,7 @@ class Motions(object):
 
     # walking
 
-    def leftEndFoward(self, frame):
+    def leftEndForward(self, frame):
         for i in range(8+1):
             self.setServo("A", 0)
 
@@ -503,7 +503,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def leftFoward(self, frame):
+    def leftForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -532,7 +532,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def rightFoward(self, frame):
+    def rightForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -621,7 +621,7 @@ class Motions(object):
 
     # back
 
-    def backLEFTEndFoward(self, frame):
+    def backLEFTEndForward(self, frame):
         for i in range(8+1):
             self.setServo("A", 0)
 
@@ -705,7 +705,7 @@ class Motions(object):
             self.setServo("U",  + i * 2.5)
             self.delay(frame)
 
-    def backLEFTFoward(self, frame):
+    def backLEFTForward(self, frame):
         for i in range(8+1):
             self.setServo("A", 0)
 
@@ -789,7 +789,7 @@ class Motions(object):
             self.setServo("U",  - i * 2.5)
             self.delay(frame)
 
-    def backRIGHTFoward(self, frame):
+    def backRIGHTForward(self, frame):
         for i in range(8+1):
             self.setServo("A", 0)
 
@@ -933,7 +933,7 @@ class Motions(object):
 
     # crab
 
-    def RIGHTrightCrabFoward(self, frame):
+    def RIGHTrightCrabForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -1020,7 +1020,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def RIGHTleftCrabFoward(self, frame):
+    def RIGHTleftCrabForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -1078,7 +1078,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def LEFTleftCrabFoward(self, frame):
+    def LEFTleftCrabForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -1165,7 +1165,7 @@ class Motions(object):
 
             self.delay(frame)
 
-    def LEFTrightCrabFoward(self, frame):
+    def LEFTrightCrabForward(self, frame):
         for i in range(4+1):
             self.setServo("A", 0)
 
@@ -1385,22 +1385,22 @@ class Motions(object):
         self.crouch()
         self.delay(500)
         self.LEFTwalkBeginUp(delaytime + 10)
-        self.LEFTwalkBeginFoward(delaytime + 10)
+        self.LEFTwalkBeginForward(delaytime + 10)
         self.LEFTwalkBeginDown(delaytime + 10)
         for i in range(0, times, 2):
 
             if (i != 0):
 
                 self.leftUp(delaytime)
-                self.leftFoward(delaytime)
+                self.leftForward(delaytime)
                 self.leftDown(delaytime)
 
             self.rightUp(delaytime)
-            self.rightFoward(delaytime)
+            self.rightForward(delaytime)
             self.rightDown(delaytime)
 
         self.leftUp(delaytime + 10)
-        self.leftEndFoward(delaytime + 20)
+        self.leftEndForward(delaytime + 20)
         self.leftEnd(delaytime + 30)
 
         self.delay(500)
@@ -1419,7 +1419,7 @@ class Motions(object):
         self.crouch()
         self.delay(500)
         self.LEFTwalkBeginUp(delaytime)
-        self.LEFTbackBeginFoward(delaytime)
+        self.LEFTbackBeginForward(delaytime)
         self.LEFTbackBeginDown(delaytime)
 
         for i in range(0, times, 2):
@@ -1427,15 +1427,15 @@ class Motions(object):
             if (i != 0):
 
                 self.backLEFTUp(delaytime)
-                self.backLEFTFoward(delaytime)
+                self.backLEFTForward(delaytime)
                 self.backLEFTDown(delaytime)
 
             self.backRIGHTUp(delaytime)
-            self.backRIGHTFoward(delaytime)
+            self.backRIGHTForward(delaytime)
             self.backRIGHTDown(delaytime)
 
         self.backLEFTUp(delaytime)
-        self.backLEFTEndFoward(delaytime)
+        self.backLEFTEndForward(delaytime)
         self.backLEFTEnd(delaytime)
 
         self.delay(500)
@@ -1451,11 +1451,11 @@ class Motions(object):
         for i in range(times):
 
             self.RIGHTwalkBeginUp(delaytime)
-            self.RIGHTrightCrabFoward(delaytime)
+            self.RIGHTrightCrabForward(delaytime)
             self.RIGHTrightCrabDown(delaytime)
 
             self.RIGHTleftCrabUp(delaytime)
-            self.RIGHTleftCrabFoward(delaytime)
+            self.RIGHTleftCrabForward(delaytime)
             self.RIGHTleftCrabDown(delaytime)
 
         self.delay(500)
@@ -1472,11 +1472,11 @@ class Motions(object):
         for i in range(times):
 
             self.LEFTwalkBeginUp(delaytime)
-            self.LEFTleftCrabFoward(delaytime)
+            self.LEFTleftCrabForward(delaytime)
             self.LEFTleftCrabDown(delaytime)
 
             self.LEFTrightCrabUp(delaytime)
-            self.LEFTrightCrabFoward(delaytime)
+            self.LEFTrightCrabForward(delaytime)
             self.LEFTrightCrabDown(delaytime)
 
         self.delay(500)
@@ -1494,7 +1494,7 @@ class Motions(object):
         for i in range(times):
 
             self.LEFTwalkBeginUp(delaytime)
-            self.LEFTwalkBeginFoward(delaytime)
+            self.LEFTwalkBeginForward(delaytime)
             self.LEFTwalkBeginDown(delaytime)
             self.turnRightLEFTToCrouch(delaytime)
 
@@ -1512,7 +1512,7 @@ class Motions(object):
         for i in range(times):
 
             self.RIGHTwalkBeginUp(delaytime)
-            self.RIGHTwalkBeginFoward(delaytime)
+            self.RIGHTwalkBeginForward(delaytime)
             self.RIGHTwalkBeginDown(delaytime)
             self.turnLeftRIGHTToCrouch(delaytime)
 
