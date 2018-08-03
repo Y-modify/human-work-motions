@@ -1029,7 +1029,7 @@ class Motions(object):
             self.setServo("F", 0)
             self.setServo("G", 0)
 
-            self.setServo("H",  - 20)
+            self.setServo("H",  - 25)
             self.setServo("I",  - self.kI * 4 + 5)
 
             self.setServo("K",  - 8 + i * 2)
@@ -1058,7 +1058,7 @@ class Motions(object):
             self.setServo("F", 0)
             self.setServo("G", 0)
 
-            self.setServo("H",  - 20 + i * 5)
+            self.setServo("H",  - 25 + i * 5)
             self.setServo("I",  - self.kI * 4 + 5)
 
             self.setServo("K", 0)
