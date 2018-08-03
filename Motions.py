@@ -35,6 +35,7 @@ class Motions(object):
     def stand(self):
         for name, _ in self.stand_positions.items():
             self.setServo(name, 0)
+        self.delay(0)
 
     def bowing(self):
         for i in range(6):
