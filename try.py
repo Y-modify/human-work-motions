@@ -31,5 +31,16 @@ motions = Motions(robot, portmap=portmap, stand_positions=stand_positions)
 if not robot.is_real:
     motions = SequentialLoader(motions)
 motions.stand()
-motions.delay(5000)
-motions.walk(10, 30)
+
+while True:
+    print('> ', end='')
+    user_input = input().split()
+    action = user_input[0]
+    arguments = map(int, user_input[1:])
+    try:
+        getattr(motions, action)(*arguments)
+    except AttributeError:
+        print(f'No such motion: {action}')
+    except KeyboardInterrupt:
+        print(f'Interrupted')
+        motions.stand()
