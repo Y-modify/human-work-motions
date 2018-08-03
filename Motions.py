@@ -37,7 +37,7 @@ class Motions(object):
             self.setServo(name, 0)
 
     def bowing(self):
-        for i in range(5+1):
+        for i in range(6):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -66,7 +66,7 @@ class Motions(object):
             self.delay(40)
 
     def resetBowing(self):
-        for i in range(5+1):
+        for i in range(6):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -95,7 +95,7 @@ class Motions(object):
             self.delay(40)
 
     def crouch(self):
-        for i in range(5+1):
+        for i in range(6):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -124,7 +124,7 @@ class Motions(object):
             self.delay(40)
 
     def resetCrouch(self):
-        for i in range(5+1):
+        for i in range(6):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -156,7 +156,7 @@ class Motions(object):
     # begins
 
     def LEFTwalkBeginUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -185,7 +185,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTwalkBeginForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -213,7 +213,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTwalkBeginDown(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -241,7 +241,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTwalkBeginUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -270,7 +270,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTwalkBeginForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -298,7 +298,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTwalkBeginDown(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -326,7 +326,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTbackBeginForward(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -354,7 +354,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTbackBeginDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -384,7 +384,7 @@ class Motions(object):
     # walking
 
     def leftEndForward(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -413,7 +413,7 @@ class Motions(object):
             self.delay(frame)
 
     def leftEnd(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -442,7 +442,7 @@ class Motions(object):
             self.delay(frame)
 
     def leftUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -471,7 +471,7 @@ class Motions(object):
             self.delay(frame)
 
     def rightUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -500,7 +500,7 @@ class Motions(object):
             self.delay(frame)
 
     def leftForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -529,7 +529,7 @@ class Motions(object):
             self.delay(frame)
 
     def rightForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -558,7 +558,7 @@ class Motions(object):
             self.delay(frame)
 
     def leftDown(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -587,7 +587,7 @@ class Motions(object):
             self.delay(frame)
 
     def rightDown(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -618,7 +618,7 @@ class Motions(object):
     # back
 
     def backLEFTEndForward(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -646,7 +646,7 @@ class Motions(object):
             self.delay(frame)
 
     def backLEFTEnd(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -674,7 +674,7 @@ class Motions(object):
             self.delay(frame)
 
     def backLEFTUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -702,7 +702,7 @@ class Motions(object):
             self.delay(frame)
 
     def backLEFTForward(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -730,7 +730,7 @@ class Motions(object):
             self.delay(frame)
 
     def backLEFTDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -758,7 +758,7 @@ class Motions(object):
             self.delay(frame)
 
     def backRIGHTUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -786,7 +786,7 @@ class Motions(object):
             self.delay(frame)
 
     def backRIGHTForward(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -814,7 +814,7 @@ class Motions(object):
             self.delay(frame)
 
     def backRIGHTDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -842,7 +842,7 @@ class Motions(object):
             self.delay(frame)
 
     def backRIGHTToCrouch(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -872,7 +872,7 @@ class Motions(object):
     # turn
 
     def turnRightLEFTToCrouch(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -900,7 +900,7 @@ class Motions(object):
             self.delay(frame)
 
     def turnLeftRIGHTToCrouch(self, frame):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -930,7 +930,7 @@ class Motions(object):
     # crab
 
     def RIGHTrightCrabForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -959,7 +959,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTrightCrabDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -988,7 +988,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTleftCrabUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1017,7 +1017,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTleftCrabForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1046,7 +1046,7 @@ class Motions(object):
             self.delay(frame)
 
     def RIGHTleftCrabDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1075,7 +1075,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTleftCrabForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1104,7 +1104,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTleftCrabDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1133,7 +1133,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTrightCrabUp(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1162,7 +1162,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTrightCrabForward(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1191,7 +1191,7 @@ class Motions(object):
             self.delay(frame)
 
     def LEFTrightCrabDown(self, frame):
-        for i in range(4+1):
+        for i in range(5):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1222,7 +1222,7 @@ class Motions(object):
     # dogeza
 
     def seiza1(self):
-        for i in range(10+1):
+        for i in range(11):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1253,7 +1253,7 @@ class Motions(object):
     # sit
 
     def sitdown1(self):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1282,7 +1282,7 @@ class Motions(object):
             self.delay(50)
 
     def sitdown2(self):
-        for i in range(16+1):
+        for i in range(17):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1311,7 +1311,7 @@ class Motions(object):
             self.delay(50)
 
     def situp1(self):
-        for i in range(8+1):
+        for i in range(9):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
@@ -1340,7 +1340,7 @@ class Motions(object):
             self.delay(60)
 
     def situp2(self):
-        for i in range(16+1):
+        for i in range(17):
             self.setServo("A", 0)
 
             self.setServo("B", 0)
