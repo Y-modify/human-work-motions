@@ -2,21 +2,27 @@ import yaml
 from humanoid import Humanoid
 from SequentialLoader import SequentialLoader
 from Motions import Motions
+import argparse
 
-real = False
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--real', action='store_true', help="Non-simulation environment")
+parser.add_argument('-p', '--portmap', default='config/portmap.yml', type=str, help="Portmap file")
+parser.add_argument('-s', '--stand-positions', default='config/stand_positions.yml', type=str, help="Stand positions file")
+parser.add_argument('-u', '--urdf', default='yamax.urdf', type=str, help="Robot URDF")
+args = parser.parse_args()
 
-with open('config/portmap.yml') as f:
+with open(args.portmap) as f:
     portmap = yaml.load(f)
 
-with open('config/stand_positions.yml') as f:
+with open(args.stand_positions) as f:
     stand_positions = yaml.load(f)
 
-if real:
-    robot = Humanoid("yamax.urdf", real=True)
+if args.real:
+    robot = Humanoid(args.urdf, real=True)
 else:
     import pybullet
     pybullet.connect(pybullet.GUI)
-    robot = Humanoid("yamax.urdf", bullet_client=pybullet)
+    robot = Humanoid(args.urdf, bullet_client=pybullet)
     pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_GUI, 0)
     pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_MOUSE_PICKING, 0)
     pybullet.resetDebugVisualizerCamera(0.7 + 1, 75, -15, [0, 0, 0])
