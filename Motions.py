@@ -27,10 +27,6 @@ class Motions(object):
     def delay(self, ms):
         time.sleep(ms/1000)
 
-    # Initialize Servo Driver
-    def ServoInit(self):
-        self.delay(100)
-
     def setServo(self, name, deg):
         self.setServoPulse(self.portmap[name],
                            self.stand_positions[name] + deg)
