@@ -1,11 +1,13 @@
 import yaml
 from humanoid import Humanoid
 from SequentialLoader import SequentialLoader
+from AsyncLoader import AsyncLoader
 from Motions import Motions
 import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--real', action='store_true', help="Non-simulation environment")
+parser.add_argument('-a', '--async', action='store_true', help="Asynchronous execution")
 parser.add_argument('-p', '--portmap', default='config/portmap.yml', type=str, help="Portmap file")
 parser.add_argument('-s', '--stand-positions', default='config/stand_positions.yml', type=str, help="Stand positions file")
 parser.add_argument('-u', '--urdf', default='yamax.urdf', type=str, help="Robot URDF")
@@ -30,6 +32,10 @@ else:
 motions = Motions(robot, portmap=portmap, stand_positions=stand_positions)
 if not robot.is_real:
     motions = SequentialLoader(motions)
+
+if args.async:
+    motions = AsyncLoader(motions)
+
 motions.stand()
 
 while True:
