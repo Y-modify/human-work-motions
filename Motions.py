@@ -20,9 +20,15 @@ class Motions(object):
         else:
             self.stand_positions = stand_positions
 
+        self.current_joints = [None] * 20
+        for ch, idx in self.portmap.items():
+            if idx is not None:
+                self.current_joints[idx] = self.stand_positions[ch]
+
     def setServoPulse(self, idx, deg):
         if idx is not None:
             self.robot.set_joint_state(idx if self.robot.is_real else idx-8, (deg - 90) / 180 * math.pi)
+            self.current_joints[idx] = deg
 
     def delay(self, ms):
         time.sleep(ms/1000)
@@ -31,11 +37,28 @@ class Motions(object):
         self.setServoPulse(self.portmap[name],
                            self.stand_positions[name] + deg)
 
+    def stand(self, ms=100):
+        resolution = 10
+        num_iterations = ms // resolution
+
+        # save previous joints because they changes in setServoPulse in the loop
+        previous_joints = self.current_joints
+        for t in range(num_iterations):
+            start = time.time()
+            for name, deg in self.stand_positions.items():
+                idx = self.portmap[name]
+                if idx is None:
+                    continue
+                from_deg = previous_joints[idx]
+                deg_to_set = from_deg + ((deg - from_deg) / num_iterations) * t
+                self.setServoPulse(idx, deg_to_set)
+            while (time.time() - start) < resolution / 1000:
+                pass
+
     # Base Functions
-    def stand(self):
+    def immediate_stand(self):
         for name, _ in self.stand_positions.items():
             self.setServo(name, 0)
-        self.delay(0)
 
     def bowing(self):
         for i in range(6):
@@ -155,7 +178,6 @@ class Motions(object):
 
     # Walking
     # begins
-
     def LEFTwalkBeginUp(self, frame):
         for i in range(5):
             self.setServo("A", 0)
