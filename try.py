@@ -52,3 +52,5 @@ while True:
     except KeyboardInterrupt:
         print(f'Interrupted')
         motions.stand()
+    except TypeError as e:
+        print(e)
