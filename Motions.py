@@ -1452,6 +1452,7 @@ class Motions(object):
             self.RIGHTrightCrabDown(delaytime)
 
             self.RIGHTleftCrabUp(delaytime)
+            self.delay(100)
             self.RIGHTleftCrabForward(delaytime)
             self.RIGHTleftCrabDown(delaytime)
 
@@ -1473,6 +1474,7 @@ class Motions(object):
             self.LEFTleftCrabDown(delaytime)
 
             self.LEFTrightCrabUp(delaytime)
+            self.delay(100)
             self.LEFTrightCrabForward(delaytime)
             self.LEFTrightCrabDown(delaytime)
 
