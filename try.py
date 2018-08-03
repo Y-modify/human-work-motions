@@ -2,7 +2,6 @@ import yaml
 from humanoid import Humanoid
 from SequentialLoader import SequentialLoader
 from AsyncLoader import AsyncLoader
-from SmoothLoader import SmoothLoader
 from Motions import Motions
 import argparse
 
@@ -37,7 +36,6 @@ if not robot.is_real:
 if args.async:
     motions = AsyncLoader(motions)
 
-motions = SmoothLoader(motions)
 motions.stand()
 
 while True:
@@ -51,4 +49,4 @@ while True:
         print(f'No such motion: {action}')
     except KeyboardInterrupt:
         print(f'Interrupted')
-        motions.stand()
+        motions.smooth_stand()
