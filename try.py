@@ -49,4 +49,4 @@ while True:
         print(f'No such motion: {action}')
     except KeyboardInterrupt:
         print(f'Interrupted')
-        motions.smooth_stand()
+        motions.stand()

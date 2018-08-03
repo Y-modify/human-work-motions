@@ -37,7 +37,7 @@ class Motions(object):
         self.setServoPulse(self.portmap[name],
                            self.stand_positions[name] + deg)
 
-    def smooth_stand(self, ms=100):
+    def stand(self, ms=100):
         resolution = 10
         num_iterations = ms // resolution
 
@@ -56,7 +56,7 @@ class Motions(object):
                 pass
 
     # Base Functions
-    def stand(self):
+    def immediate_stand(self):
         for name, _ in self.stand_positions.items():
             self.setServo(name, 0)
 
