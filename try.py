@@ -2,6 +2,7 @@ import yaml
 from humanoid import Humanoid
 from SequentialLoader import SequentialLoader
 from AsyncLoader import AsyncLoader
+from SmoothLoader import SmoothLoader
 from Motions import Motions
 import argparse
 
@@ -36,6 +37,7 @@ if not robot.is_real:
 if args.async:
     motions = AsyncLoader(motions)
 
+motions = SmoothLoader(motions)
 motions.stand()
 
 while True:
